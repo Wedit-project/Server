@@ -11,9 +11,9 @@ assignees: ''
 발생한 문제에 대해 설명해주세요.
 
 ## 2. 원인 파악
-[ ] factor
+1. [ ] factor
 ## 3. 해결 방안 
-[ ] solution
+1. [ ] solution
 ## 4. 결과 확인
  
 ## 📎 ETC
