@@ -19,9 +19,6 @@ public class Member extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "kakao_id", nullable = false, unique = true)
-    private String kakaoId;
-
     @Column(nullable = false)
     private String email;
 
@@ -32,18 +29,31 @@ public class Member extends BaseTimeEntity {
     @Column(name = "role", nullable = false)
     private MemberRole role;
 
+    @Column(nullable = false, unique = true)
+    private String refresh_token;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private MemberStatus status;
 
     // Builder를 통해서만 객체를 생성하도록 (일반 생성자는 protected)
     @Builder
-    private Member(String kakaoId, String email, String name, MemberRole role, MemberStatus status) {
-        this.kakaoId = kakaoId;
+    private Member(String kakaoId, String email, String name, MemberRole role, String refresh_token, MemberStatus status) {
         this.email = email;
         this.name = name;
         this.role = role != null ? role : MemberRole.USER;     // 유저 역할 기본값 USER
+        this.refresh_token = refresh_token;
         this.status = status != null ? status : MemberStatus.ACTIVE; // 유저 상태 기본값 ACTIVE
+    }
+
+    public static Member createUser(String email, String name, String refreshToken) {
+        return Member.builder()
+                .email(email)
+                .name(name)
+                .refresh_token(refreshToken)
+                .role(MemberRole.USER) // 기본값 USER
+                .status(MemberStatus.ACTIVE) // 기본값 ACTIVE
+                .build();
     }
 
     // 상태 변경 예시 메서드
