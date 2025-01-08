@@ -23,18 +23,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # 환경별 yml 파일 생성(1) - application.yml
-      - name: make application.yml
-        if: |
-          contains(github.ref, 'dev') || 
-          (github.event_name == 'pull_request')
-        run: |
-          mkdir ./src/main/resources # resources 폴더 생성
-          cd ./src/main/resources # resources 폴더로 이동
-          touch ./application.yml # application.yml 생성
-          echo "${{ secrets.YML }}" > ./application.yml # github actions에서 설정한 값을 application.yml 파일에 쓰기
-        shell: bash
-
       # gradle caching - 빌드 시간 향상
       - name: Gradle Caching
         uses: actions/cache@v3
@@ -44,12 +32,24 @@ jobs:
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
-            ${{ runner.os }}-gradle-        
+            ${{ runner.os }}-gradle-  
+
+      # 환경별 yml 파일 생성(1) - application.yml
+      - name: make application.yml
+        if: |
+          contains(github.ref, 'develop') || 
+          (github.event_name == 'pull_request')
+        run: |
+          mkdir ./src/main/resources # resources 폴더 생성
+          cd ./src/main/resources # resources 폴더로 이동
+          touch ./application.yml # application.yml 생성
+          echo "${{ secrets.YML }}" > ./application.yml # github actions에서 설정한 값을 application.yml 파일에 쓰기
+        shell: bash
 
       # 환경별 yml 파일 생성(2) - dev
       - name: make application-dev.yml
         if: |
-          contains(github.ref, 'dev') || 
+          contains(github.ref, 'develop') || 
           (github.event_name == 'pull_request')
         run: |
           cd ./src/main/resources
@@ -57,10 +57,10 @@ jobs:
           echo "${{ secrets.YML_DEV }}" > ./application-dev.yml
         shell: bash
 
-      # 환경별 yml 파일 생성(2) - bucket
+      # 환경별 yml 파일 생성(3) - bucket
       - name: make application-bucket.yml
         if: |
-          contains(github.ref, 'dev') || 
+          contains(github.ref, 'develop') || 
           (github.event_name == 'pull_request')
         run: |
           cd ./src/main/resources
@@ -71,7 +71,7 @@ jobs:
       # 환경별 yml 파일 생성(3) - oauth
       #- name: make application-oauth.yml
       #  if: |
-      #    contains(github.ref, 'dev') ||
+      #    contains(github.ref, 'develop') ||
       #    (github.event_name == 'pull_request')
       #  run: |
       #    cd ./src/main/resources
@@ -82,7 +82,7 @@ jobs:
       # 환경별 yml 파일 생성(3) - jwt
       #- name: make application-jwt.yml
       #  if: |
-      #    contains(github.ref, 'dev') ||
+      #    contains(github.ref, 'develop') ||
       #    (github.event_name == 'pull_request')
       #  run: |
       #    cd ./src/main/resources
