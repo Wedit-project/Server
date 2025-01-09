@@ -1,4 +1,4 @@
-package com.wedit.weditapp.domain.invitation.dto.request;
+package com.wedit.weditapp.domain.invitation.dto.response;
 
 import com.wedit.weditapp.domain.invitation.domain.Invitation;
 import jakarta.validation.constraints.NotBlank;
@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
-public class InvitationCreateRequestDTO {
+public class InvitationResponseDTO {
     @NotBlank(message = "groom cannot be blank")
     private String groom; // 신랑 이름
 
@@ -19,7 +19,7 @@ public class InvitationCreateRequestDTO {
 
     private String groomF; // 신랑 아버지 이름
 
-    private String groomM;  // 신랑 어머니 이름
+    private String groomM; // 신랑 어머니 이름
 
     private String brideF; // 신부 아버지 이름
 
@@ -34,22 +34,23 @@ public class InvitationCreateRequestDTO {
     private LocalDate date; // 결혼식 날짜
 
     @NotBlank(message = "theme cannot be blank")
-    private String theme; // 테마
+    private String theme; // 테마 (Enum → String)
 
     private String distribution; // 청첩장 URL
 
     private boolean guestBookOption; // 방명록 옵션
 
-    private boolean decisionOption; // 참석 의사 수집 옵션
+    private boolean decisionOption; // 참석 여부 옵션
 
     private boolean accountOption; // 계좌 공개 옵션
 
-    // BankAccountDTO 생성 후 활성화
+    // DTO 생성 후 활성화
     //private List<BankAccountDTO> bankAccounts; // 계좌 정보 리스트
+    //private List<GuestbookResponseDTO> guestbooks; // 방명록 리스트
 
     @Builder
-    private InvitationCreateRequestDTO(String groom, String bride, String groomF, String groomM, String brideF, String brideM, String address, String extraAddress, LocalDate date, String theme, String distribution, boolean guestBookOption, boolean decisionOption, boolean accountOption
-                                       //, List<BankAccountDTO> bankAccounts
+    private InvitationResponseDTO(String groom, String bride, String groomF, String groomM, String brideF, String brideM, String address, String extraAddress, LocalDate date, String theme, String distribution, boolean guestBookOption, boolean decisionOption, boolean accountOption
+            //, List<BankAccountDTO> bankAccounts, List<GuestbookResponseDTO> guestbooks
     ) {
         this.groom = groom;
         this.bride = bride;
@@ -66,12 +67,13 @@ public class InvitationCreateRequestDTO {
         this.decisionOption = decisionOption;
         this.accountOption = accountOption;
         //this.bankAccounts = bankAccounts;
+        //this.guestbooks = guestbooks;
     }
 
-    public static InvitationCreateRequestDTO from(Invitation invitation
-                                                  //, List<BankAccountDTO> bankAccounts
+    public static InvitationResponseDTO from(Invitation invitation
+            //, List<BankAccountDTO> bankAccounts, List<GuestbookResponseDTO> guestbooks
     ) {
-        return InvitationCreateRequestDTO.builder()
+        return InvitationResponseDTO.builder()
                 .groom(invitation.getGroom())
                 .bride(invitation.getBride())
                 .groomF(invitation.getGroomF())
@@ -87,6 +89,8 @@ public class InvitationCreateRequestDTO {
                 .decisionOption(invitation.isDecisionOption())
                 .accountOption(invitation.isAccountOption())
                 //.bankAccounts(bankAccounts)
+                //.guestbooks(guestbooks)
                 .build();
     }
 }
+
