@@ -122,4 +122,25 @@ public class Invitation extends BaseTimeEntity {
     public void trueAccountOption() {
         this.accountOption = true;
     }
+
+    public void update(String groom, String bride, String groomF, String groomM, String brideF, String brideM, String address, String extraAddress, LocalDate date, Theme theme, String distribution, boolean guestBookOption, boolean decisionOption, boolean accountOption) {
+        if (member == null || groom == null || bride == null || address == null || date == null || theme == null) {
+            throw new IllegalArgumentException("필수 필드 누락");
+        }
+
+        this.groom = groom;
+        this.bride = bride;
+        this.groomF = groomF;
+        this.groomM = groomM;
+        this.brideF = brideF;
+        this.brideM = brideM;
+        this.address = address;
+        this.extraAddress = extraAddress;
+        this.date = date;
+        this.theme = theme;
+        this.distribution = distribution;
+        this.guestBookOption = guestBookOption;
+        this.decisionOption = decisionOption;
+        this.accountOption = accountOption;
+    }
 }
