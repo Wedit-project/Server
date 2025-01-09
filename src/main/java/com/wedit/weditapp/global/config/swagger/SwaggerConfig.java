@@ -14,8 +14,8 @@ import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.servers.Server;
 
 @OpenAPIDefinition(info = @Info(
-	title = "EatMate API",
-	description = "EatMate API 명세서",
+	title = "Wedit API",
+	description = "Wedit API 명세서",
 	version = "v1.0.0"))
 @Configuration
 public class SwaggerConfig {
