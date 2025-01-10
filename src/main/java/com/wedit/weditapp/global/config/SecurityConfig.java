@@ -40,7 +40,7 @@ public class SecurityConfig {
 				authorize ->
 					authorize
 						.requestMatchers( "/v3/api-docs/**", "/swagger-ui/**").permitAll() // swagger-ui 접근 허용
-						.anyRequest().authenticated()
+						.anyRequest().permitAll()
 			);
 
 		return http.build();
@@ -50,11 +50,10 @@ public class SecurityConfig {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 
-		configuration.setAllowedOrigins(Arrays.asList());
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
 		configuration.setAllowedHeaders(Arrays.asList("*"));
-		configuration.setExposedHeaders(Arrays.asList("Authorization, Authorization_refresh", "accept"));
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8080"));
+		configuration.setExposedHeaders(Arrays.asList("Authorization", "Authorization_refresh", "accept"));
 		configuration.setAllowCredentials(true);
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

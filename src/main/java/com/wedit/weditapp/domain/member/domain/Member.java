@@ -32,30 +32,25 @@ public class Member extends BaseTimeEntity {
     @Column(name = "role", nullable = false)
     private MemberRole role;
 
-    @Column(nullable = false, unique = true)
-    private String refresh_token;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private MemberStatus status;
 
     // Builder를 통해서만 객체를 생성하도록 (일반 생성자는 protected)
     @Builder
-    private Member(String kakaoId, String email, String name, MemberRole role, String password, MemberStatus status) {
+    private Member(String email, String password, String name, MemberRole role, MemberStatus status) {
         this.email = email;
+        this.password = password;
         this.name = name;
         this.role = role != null ? role : MemberRole.USER;     // 유저 역할 기본값 USER
-        this.password = password;
         this.status = status != null ? status : MemberStatus.ACTIVE; // 유저 상태 기본값 ACTIVE
     }
 
-    public static Member createUser(String email, String name, String password) {
+    public static Member createUser(String email, String password, String name) {
         return Member.builder()
                 .email(email)
-                .name(name)
                 .password(password)
-                .role(MemberRole.USER) // 기본값 USER
-                .status(MemberStatus.ACTIVE) // 기본값 ACTIVE
+                .name(name)
                 .build();
     }
 
