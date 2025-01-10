@@ -42,10 +42,10 @@ public class Invitation extends BaseTimeEntity {
     @Column(length = 20)
     private String brideM; // 신부 어머니 이름
 
-    @Column(length = 255, nullable = false)
+    @Column(nullable = false)
     private String address; // 주소
 
-    @Column(length = 255)
+    @Column
     private String extraAddress; // 세부 주소
 
     @Column(nullable = false)
@@ -55,7 +55,7 @@ public class Invitation extends BaseTimeEntity {
     @Column(length = 20, nullable = false)
     private Theme theme; // 청첩장 테마
 
-    @Column(length = 255)
+    @Column
     private String distribution; // 청첩장 url
 
     @Column(nullable = false)
@@ -91,7 +91,7 @@ public class Invitation extends BaseTimeEntity {
         this.accountOption = accountOption;
     }
 
-    public static Invitation createInvitation(Member member, String groom, String bride, String groomF, String groomM, String brideF, String brideM, String address, String extraAddress, LocalDate date, Theme theme, String distribution) {
+    public static Invitation createInvitation(Member member, String groom, String bride, String groomF, String groomM, String brideF, String brideM, String address, String extraAddress, LocalDate date, Theme theme, String distribution, boolean guestBookOption, boolean decisionOption, boolean accountOption) {
         return Invitation.builder()
                 .member(member)
                 .groom(groom)
@@ -105,13 +105,13 @@ public class Invitation extends BaseTimeEntity {
                 .date(date)
                 .theme(theme)
                 .distribution(distribution)
-                .guestBookOption(false)
-                .decisionOption(false)
-                .accountOption(false)
+                .guestBookOption(guestBookOption)
+                .decisionOption(decisionOption)
+                .accountOption(accountOption)
                 .build();
     }
 
-    public void tureGuestBook() {
+    public void trueGuestBook() {
         this.guestBookOption = true;
     }
 

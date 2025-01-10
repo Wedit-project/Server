@@ -46,47 +46,4 @@ public class InvitationUpdateRequestDTO {
 
     // BankAccountDTO 생성 후 활성화
     //private List<BankAccountDTO> bankAccounts; // 계좌 정보 리스트
-
-    @Builder
-    private InvitationUpdateRequestDTO(String groom, String bride, String groomF, String groomM, String brideF, String brideM, String address, String extraAddress, LocalDate date, String theme, String distribution, boolean guestBookOption, boolean decisionOption, boolean accountOption
-                                       //, List<BankAccountDTO> bankAccounts
-    ) {
-        this.groom = groom;
-        this.bride = bride;
-        this.groomF = groomF;
-        this.groomM = groomM;
-        this.brideF = brideF;
-        this.brideM = brideM;
-        this.address = address;
-        this.extraAddress = extraAddress;
-        this.date = date;
-        this.theme = theme;
-        this.distribution = distribution;
-        this.guestBookOption = guestBookOption;
-        this.decisionOption = decisionOption;
-        this.accountOption = accountOption;
-        //this.bankAccounts = bankAccounts;
-    }
-
-    public static InvitationUpdateRequestDTO from(Invitation invitation
-                                                  //, List<BankAccountDTO> bankAccounts
-    ) {
-        return InvitationUpdateRequestDTO.builder()
-                .groom(invitation.getGroom())
-                .bride(invitation.getBride())
-                .groomF(invitation.getGroomF())
-                .groomM(invitation.getGroomM())
-                .brideF(invitation.getBrideF())
-                .brideM(invitation.getBrideM())
-                .address(invitation.getAddress())
-                .extraAddress(invitation.getExtraAddress())
-                .date(invitation.getDate())
-                .theme(invitation.getTheme().name())
-                .distribution(invitation.getDistribution())
-                .guestBookOption(invitation.isGuestBookOption())
-                .decisionOption(invitation.isDecisionOption())
-                .accountOption(invitation.isAccountOption())
-                //.bankAccounts(bankAccounts)
-                .build();
-    }
 }
