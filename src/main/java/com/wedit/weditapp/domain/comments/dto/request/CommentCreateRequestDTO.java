@@ -16,16 +16,5 @@ public class CommentCreateRequestDTO {
     @NotBlank(message = "내용은 필수입니다.")
     private String content;
 
-    @Builder
-    private CommentCreateRequestDTO(String name, String content){
-        this.name = name;
-        this.content = content;
-    }
 
-    public static CommentCreateRequestDTO from(Comments comment){
-        return CommentCreateRequestDTO.builder()
-                .name(comment.getName())
-                .content(comment.getContent())
-                .build();
-    }
 }

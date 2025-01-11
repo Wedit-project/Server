@@ -19,19 +19,5 @@ public class DecisionCreateRequestDTO {
 
     @NotNull(message = "추가 인원은 필수입니다.")
     private Integer addPerson;
-
-    @Builder
-    private DecisionCreateRequestDTO(String name, String phoneNumber, Integer addPerson){
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.addPerson = addPerson;
-    }
-
-    public static DecisionCreateRequestDTO from (Decisions decision){
-        return DecisionCreateRequestDTO.builder()
-                .name(decision.getName())
-                .phoneNumber(decision.getPhoneNumber())
-                .addPerson(decision.getAddPerson())
-                .build();
-    }
+    
 }
