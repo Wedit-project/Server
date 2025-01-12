@@ -51,8 +51,11 @@ public class MemberController {
     })
     @PostMapping("/login")
     public ResponseEntity<GlobalResponseDto<String>> login(@RequestBody LoginRequestDto loginRequest) {
-        String message = memberService.login(loginRequest);
-        return ResponseEntity.ok(GlobalResponseDto.success(message));
+        // 로그인 로직 → 토큰 발급
+        String token = memberService.login(loginRequest);
+
+        // 토큰을 응답 바디로 전달
+        return ResponseEntity.ok(GlobalResponseDto.success(token));
     }
 
     // 모든 회원 조회 API
