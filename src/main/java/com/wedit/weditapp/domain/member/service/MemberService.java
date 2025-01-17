@@ -26,7 +26,6 @@ public class MemberService {
 
         Member member = Member.createUser(
                 requestDto.getEmail(),
-                requestDto.getPassword(),
                 requestDto.getName()
         );
 
@@ -37,11 +36,6 @@ public class MemberService {
         // 이메일로 회원 조회
         Member member = memberRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
-
-        // 비밀번호 검증 (임시: 평문 비교)
-        if (!member.getPassword().equals(loginRequest.getPassword())) {
-            throw new CommonException(ErrorCode.LOGIN_FAIL);
-        }
 
         // JWT Access Token 생성
         return jwtProvider.createAccessToken(member.getEmail());

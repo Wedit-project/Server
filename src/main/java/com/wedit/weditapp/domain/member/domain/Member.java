@@ -23,9 +23,6 @@ public class Member extends BaseTimeEntity {
     private String email;
 
     @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false)
     private String name;
 
     @Enumerated(EnumType.STRING)
@@ -38,24 +35,47 @@ public class Member extends BaseTimeEntity {
 
     // Builder를 통해서만 객체를 생성하도록 (일반 생성자는 protected)
     @Builder
-    private Member(String email, String password, String name, MemberRole role, MemberStatus status) {
+    private Member(String email, String name) {
         this.email = email;
-        this.password = password;
         this.name = name;
-        this.role = role != null ? role : MemberRole.USER;     // 유저 역할 기본값 USER
-        this.status = status != null ? status : MemberStatus.ACTIVE; // 유저 상태 기본값 ACTIVE
+        this.role = MemberRole.USER;
+        this.status = MemberStatus.ACTIVE;
     }
 
-    public static Member createUser(String email, String password, String name) {
+    // 사용자 생성 Method
+    public static Member createUser(String email, String name) {
         return Member.builder()
                 .email(email)
-                .password(password)
                 .name(name)
                 .build();
     }
 
-    // 상태 변경 예시 메서드
+    // 사용자 이메일 변경 Method
+    public void updateEmail(String newEmail) {
+        if (newEmail == null || newEmail.trim().isEmpty()) {
+            throw new IllegalArgumentException("공백이면 안됩니다.");
+        }
+        this.name = newEmail;
+    }
+
+    // 사용자 이름 변경 Method
+    public void updateName(String newName) {
+        if (newName == null || newName.trim().isEmpty()) {
+            throw new IllegalArgumentException("공백이면 안됩니다.");
+        }
+        this.name = newName;
+    }
+
+    // 사용자 상태 변경 Method
     public void deactivate() {
         this.status = MemberStatus.INACTIVE;
+    }
+
+    // 사용자 역할 변경 Method
+    public void updateRole(MemberRole newRole) {
+        if (newRole == null) {
+            throw new IllegalArgumentException("공백이면 안됩니다.");
+        }
+        this.role = newRole;
     }
 }
