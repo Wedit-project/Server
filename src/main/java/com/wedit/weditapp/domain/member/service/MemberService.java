@@ -4,6 +4,7 @@ import com.wedit.weditapp.domain.member.domain.Member;
 import com.wedit.weditapp.domain.member.domain.repository.MemberRepository;
 import com.wedit.weditapp.domain.member.dto.LoginRequestDto;
 import com.wedit.weditapp.domain.member.dto.MemberRequestDto;
+import com.wedit.weditapp.domain.member.dto.MemberResponseDto;
 import com.wedit.weditapp.global.error.ErrorCode;
 import com.wedit.weditapp.global.error.exception.CommonException;
 import com.wedit.weditapp.global.security.jwt.JwtProvider;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -44,15 +46,18 @@ public class MemberService {
     }
 
     // [모든 회원 조회]
-    public List<Member> findAllMembers() {
-        return memberRepository.findAll();
+    public List<MemberResponseDto> findAllMembers() {
+        return memberRepository.findAll()
+                .stream()
+                .map(MemberResponseDto::from)
+                .collect(Collectors.toList());
     }
 
     // [단일 회원 조회]
-    public Member findMemberById(Long userId) {
-        return memberRepository.findById(userId)
-                .orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND)
-                );
+    public MemberResponseDto findMemberById(Long userId) {
+        Member member = memberRepository.findById(userId)
+                .orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
+        return MemberResponseDto.from(member);
     }
 
 }

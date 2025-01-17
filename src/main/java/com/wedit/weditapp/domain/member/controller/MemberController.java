@@ -33,12 +33,12 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "서버 에러")
     })
     @PostMapping("/signup")
-    public ResponseEntity<GlobalResponseDto<MemberResponseDto>> createMember(@Valid @RequestBody MemberRequestDto requestDto) {
+    public ResponseEntity<GlobalResponseDto<MemberResponseDto>>
+    createMember(
+    @Valid @RequestBody MemberRequestDto requestDto) {
         Member saved = memberService.createMember(requestDto);
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(GlobalResponseDto.success(MemberResponseDto.from(saved), 201));
+        return ResponseEntity.status(HttpStatus.OK).body(GlobalResponseDto.success());
     }
 
     // 임시 로그인 API
@@ -50,7 +50,9 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "서버 에러")
     })
     @PostMapping("/login")
-    public ResponseEntity<GlobalResponseDto<String>> login(@RequestBody LoginRequestDto loginRequest) {
+    public ResponseEntity<GlobalResponseDto<String>>
+    login(
+    @RequestBody LoginRequestDto loginRequest) {
         // 로그인 로직 → 토큰 발급
         String token = memberService.login(loginRequest);
 
@@ -67,11 +69,7 @@ public class MemberController {
     })
     @GetMapping
     public ResponseEntity<GlobalResponseDto<List<MemberResponseDto>>> findAllMembers() {
-        List<Member> members = memberService.findAllMembers();
-        List<MemberResponseDto> memberResponses = members.stream()
-                .map(MemberResponseDto::from)
-                .collect(Collectors.toList());
-
+        List<MemberResponseDto> memberResponses = memberService.findAllMembers();
         return ResponseEntity.ok(GlobalResponseDto.success(memberResponses));
     }
 
@@ -83,8 +81,10 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "서버 에러")
     })
     @GetMapping("/{userId}")
-    public ResponseEntity<GlobalResponseDto<MemberResponseDto>> findMemberById(@PathVariable Long userId) {
-        Member member = memberService.findMemberById(userId);
-        return ResponseEntity.ok(GlobalResponseDto.success(MemberResponseDto.from(member)));
+    public ResponseEntity<GlobalResponseDto<MemberResponseDto>>
+    findMemberById(
+    @PathVariable Long userId) {
+        MemberResponseDto memberResponse = memberService.findMemberById(userId);
+        return ResponseEntity.ok(GlobalResponseDto.success(memberResponse));
     }
 }
