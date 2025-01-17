@@ -5,9 +5,10 @@ import com.wedit.weditapp.domain.shared.MemberRole;
 import com.wedit.weditapp.domain.shared.MemberStatus;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
+@NoArgsConstructor
 public class MemberResponseDto {
     private Long id;
     private String email;
@@ -15,14 +16,15 @@ public class MemberResponseDto {
     private MemberRole role;
     private MemberStatus status;
 
+    @Builder
     public static MemberResponseDto from(Member member) {
-        return MemberResponseDto.builder()
-                .id(member.getId())
-                .email(member.getEmail())
-                .name(member.getName())
-                .role(member.getRole())
-                .status(member.getStatus())
-                .build();
+        MemberResponseDto responseDto = new MemberResponseDto();
+        responseDto.id = member.getId();
+        responseDto.email = member.getEmail();
+        responseDto.name = member.getName();
+        responseDto.role = member.getRole();
+        responseDto.status = member.getStatus();
+        return responseDto;
     }
 }
 

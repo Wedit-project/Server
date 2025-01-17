@@ -9,11 +9,13 @@ import com.wedit.weditapp.global.error.exception.CommonException;
 import com.wedit.weditapp.global.security.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
     private final JwtProvider jwtProvider; // JWT 발급을 위해
