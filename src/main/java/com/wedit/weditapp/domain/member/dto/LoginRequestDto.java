@@ -1,11 +1,16 @@
 package com.wedit.weditapp.domain.member.dto;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Setter
-public class LoginRequestDto { // 임시 로그인Dto - 나중에 수정해야 함
+@NoArgsConstructor
+public class LoginRequestDto {
     private String email;
-    private String password;
+
+    @Builder
+    public LoginRequestDto(String email) {
+        this.email = email;
+    }
 }
