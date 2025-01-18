@@ -3,6 +3,7 @@ package com.wedit.weditapp.domain.image.domain;
 import com.wedit.weditapp.domain.invitation.domain.Invitation;
 import com.wedit.weditapp.domain.shared.BaseTimeEntity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,7 +33,7 @@ public class Image extends BaseTimeEntity {
 	@Column(nullable = false)
 	private int location;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE) // 초대장 삭제 시 이미지도 삭제
 	@JoinColumn(name = "invitation_id", nullable = false)
 	private Invitation invitation;
 
