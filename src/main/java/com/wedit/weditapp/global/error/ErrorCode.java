@@ -19,7 +19,8 @@ public enum ErrorCode {
 	//회원
 	LOGIN_FAIL(401, "LOGIN_FAIL", "로그인에 실패하였습니다."),
 	USER_NOT_FOUND(404, "USER_NOT_FOUND", "유저를 찾을 수 없습니다."),
-	MEMBER_ALREADY_EXISTS(409, "MEMBER_ALREADY_EXISTS", "이미 가입된 이메일입니다."),
+	MEMBER_ALREADY_EXISTS(409, "MEMBER_ALREADY_EXISTS", "이미 존재하는 회원입니다."),
+	EMAIL_ALREADY_EXISTS(409, "EMAIL_ALREADY_EXISTS", "이미 가입된 이메일입니다."),
 	DUPLICATE_NICKNAME(409, "NICKNAME_ALREADY_EXISTS", "이미 존재하는 닉네임입니다."),
 
 	//작업

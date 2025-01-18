@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/members")
@@ -33,11 +32,9 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "서버 에러")
     })
     @PostMapping("/signup")
-    public ResponseEntity<GlobalResponseDto<MemberResponseDto>>
-    createMember(
-    @Valid @RequestBody MemberRequestDto requestDto) {
-        Member saved = memberService.createMember(requestDto);
-
+    public ResponseEntity<GlobalResponseDto<MemberResponseDto>> createMember(
+        @Valid @RequestBody MemberRequestDto requestDto) {
+        memberService.createMember(requestDto); // 반환값 사용 X -> 추후 OAuth2 구현하면서 변동 가능성 O
         return ResponseEntity.status(HttpStatus.OK).body(GlobalResponseDto.success());
     }
 
@@ -50,9 +47,8 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "서버 에러")
     })
     @PostMapping("/login")
-    public ResponseEntity<GlobalResponseDto<String>>
-    login(
-    @RequestBody LoginRequestDto loginRequest) {
+    public ResponseEntity<GlobalResponseDto<String>> login(
+        @RequestBody LoginRequestDto loginRequest) {
         // 로그인 로직 → 토큰 발급
         String token = memberService.login(loginRequest);
 
@@ -81,10 +77,8 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "서버 에러")
     })
     @GetMapping("/{userId}")
-    public ResponseEntity<GlobalResponseDto<MemberResponseDto>>
-    findMemberById(
-    @PathVariable Long userId) {
-        MemberResponseDto memberResponse = memberService.findMemberById(userId);
-        return ResponseEntity.ok(GlobalResponseDto.success(memberResponse));
+    public ResponseEntity<GlobalResponseDto<MemberResponseDto>> findMemberById(
+        @PathVariable Long userId) {
+        return ResponseEntity.ok(GlobalResponseDto.success(memberService.findMember(userId)));
     }
 }

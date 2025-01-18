@@ -17,14 +17,22 @@ public class MemberResponseDto {
     private MemberStatus status;
 
     @Builder
+    private MemberResponseDto(Long id, String email, String name, MemberRole role, MemberStatus status) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.role = role;
+        this.status = status;
+    }
+
     public static MemberResponseDto from(Member member) {
-        MemberResponseDto responseDto = new MemberResponseDto();
-        responseDto.id = member.getId();
-        responseDto.email = member.getEmail();
-        responseDto.name = member.getName();
-        responseDto.role = member.getRole();
-        responseDto.status = member.getStatus();
-        return responseDto;
+        return MemberResponseDto.builder()
+                .id(member.getId())
+                .email(member.getEmail())
+                .name(member.getName())
+                .role(member.getRole())
+                .status(member.getStatus())
+                .build();
     }
 }
 

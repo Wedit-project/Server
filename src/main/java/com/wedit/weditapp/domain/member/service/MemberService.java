@@ -25,7 +25,7 @@ public class MemberService {
     // [회원가입 관련] - 이미 존재하는 이메일인지 검사 + Member 엔티티 생성 + DB저장 및 반환
     public Member createMember(MemberRequestDto requestDto) {
         if (memberRepository.findByEmail(requestDto.getEmail()).isPresent()) {
-            throw new CommonException(ErrorCode.MEMBER_ALREADY_EXISTS);
+            throw new CommonException(ErrorCode.EMAIL_ALREADY_EXISTS);
         }
 
         Member member = Member.createUser(
@@ -54,7 +54,7 @@ public class MemberService {
     }
 
     // [단일 회원 조회]
-    public MemberResponseDto findMemberById(Long userId) {
+    public MemberResponseDto findMember(Long userId) {
         Member member = memberRepository.findById(userId)
                 .orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
         return MemberResponseDto.from(member);
