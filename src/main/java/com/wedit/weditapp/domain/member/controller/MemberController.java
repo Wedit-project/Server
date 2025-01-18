@@ -77,7 +77,7 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "서버 에러")
     })
     @GetMapping("/{userId}")
-    public ResponseEntity<GlobalResponseDto<MemberResponseDto>> findMemberById(
+    public ResponseEntity<GlobalResponseDto<MemberResponseDto>> findMember(
         @PathVariable Long userId) {
         return ResponseEntity.ok(GlobalResponseDto.success(memberService.findMember(userId)));
     }

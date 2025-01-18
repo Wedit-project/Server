@@ -59,5 +59,4 @@ public class MemberService {
                 .orElseThrow(() -> new CommonException(ErrorCode.USER_NOT_FOUND));
         return MemberResponseDto.from(member);
     }
-
 }
