@@ -1,15 +1,10 @@
 package com.wedit.weditapp.domain.invitation.dto.request;
 
-import com.wedit.weditapp.domain.invitation.domain.Invitation;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @NoArgsConstructor
@@ -33,7 +28,6 @@ public class InvitationCreateRequestDTO {
 
     private String extraAddress; // 상세 주소
 
-    @NotBlank(message = "date cannot be blank")
     private LocalDate date; // 결혼식 날짜
 
     @NotBlank(message = "theme cannot be blank")

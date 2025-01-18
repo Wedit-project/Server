@@ -1,8 +1,6 @@
 package com.wedit.weditapp.domain.invitation.dto.request;
 
-import com.wedit.weditapp.domain.invitation.domain.Invitation;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

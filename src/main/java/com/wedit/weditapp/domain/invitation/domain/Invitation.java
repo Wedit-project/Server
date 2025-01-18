@@ -50,7 +50,6 @@ public class Invitation extends BaseTimeEntity {
     @Column
     private String extraAddress; // 세부 주소
 
-    @Column(nullable = false)
     private LocalDate date; // 결혼식 날짜
 
     @Enumerated(EnumType.STRING)
