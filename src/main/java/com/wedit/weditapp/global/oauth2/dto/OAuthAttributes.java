@@ -4,10 +4,8 @@ import com.wedit.weditapp.global.oauth2.userInfo.KakaoOAuth2UserInfo;
 import com.wedit.weditapp.global.oauth2.userInfo.OAuth2UserInfo;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.security.core.userdetails.User;
 
 import java.util.Map;
-import java.util.UUID;
 
 @Getter
 public class OAuthAttributes {

@@ -94,6 +94,14 @@ public class JwtProvider {
         response.setHeader(refreshHeader, BEARER + refreshToken);
     }
 
+    public String getAccessHeader() {
+        return "Authorization";
+    }
+
+    public String getRefreshHeader() {
+        return "Authorization-Refresh";
+    }
+
     // 헤더에서 AccessToken 추출
     public Optional<String> extractAccessToken(HttpServletRequest request) {
         return Optional.ofNullable(request.getHeader(accessHeader))
