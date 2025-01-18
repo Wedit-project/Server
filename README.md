@@ -6,7 +6,7 @@
 #### [백엔드 노션 링크](https://www.notion.so/Spring-16edb6b0994880d7ad84e491d7440f2c)
 
 ## BE Members
-<img width="160px" src="https://avatars.githubusercontent.com/u/105594739?v=4"/> | <img width="160px" src="https://avatars.githubusercontent.com/u/106726806?v=4"/> | <img width="160px" src="https://avatars.githubusercontent.com/u/105594739?v=4"/> | <img width="160px" src="https://avatars.githubusercontent.com/u/105594739?v=4"/> | 
+<img width="160px" src="https://avatars.githubusercontent.com/u/106726806?v=4"/> | <img width="160px" src="https://avatars.githubusercontent.com/u/106726806?v=4"/> | <img width="160px" src="https://avatars.githubusercontent.com/u/106726806?v=4"/> | <img width="160px" src="https://avatars.githubusercontent.com/u/106726806?v=4"/> | 
 |:-----:|:-----:|:-----:|:-----:|
 |[동구 (김동윤)](https://github.com/dyk-im)|[동동 (김동섭)](https://github.com/dogsub)|[위즈 (이슬기)](https://github.com/leeseulgi0208)|[환이 (최경환)](https://github.com/KyunghwanChoi)|
 |리드 👨🏻‍💻|팀원 👨🏻‍💻|팀원 👨🏻‍💻|팀원 👨🏻‍💻|
