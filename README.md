@@ -37,24 +37,16 @@
     - develop: 기본 브랜치로, 기능을 개발하는 브랜치
 2. **작업 순서**
     1. **작업할 이슈 작성**
-    
     2. **작업 브랜치 생성**
         - 기능 개발: `feature/#[이슈번호]-title`
             - ex) feature/#111-login
-        - 버그 수정: `fix/#[이슈번호]-title`
-            - ex) fix/#111-login
         - 리팩토링: `refactor/#[이슈번호]-title`
             - ex) refactor/#111-login
-              
     3. **생성한 브랜치에서 작업 수행** 
     4. **원격 저장소에 작업 브랜치 푸시** 
     5. **Pull Request 생성**
-      - `develop` 브랜치 대상으로 Pull Request 생성
-      - 리뷰어의 리뷰를 받은 후 PR을 승인 받고 `develop` 브랜치에 병합 후 브랜치 삭제
 ---
 ## 🧑‍💻 Code Convention 🧑‍💻
-[🔗 Code Convention Notion Link 🔗](https://www.notion.so/Code-Convention-46691e85ccdd46748495cea00fdd3b37)
-
 **네이밍 규칙**
 - **변수/상수**: 카멜케이스 (예: `userName`)
 - **클래스/구조체**: 파스칼케이스 (예: `UserProfile`)
@@ -64,11 +56,6 @@
 ## 💬 Issue Convention 💬
 ## 🫷 PR Convention 🫸
 ## 🙏 Commit Convention 🙏
-[🔗 Relational Convention Notion Link 🔗](https://www.notion.so/Git-Convention-bafdbc76528045599eb5439a9b958726)
-
----
 ## 📁 Foldering Convention 📁
-[🔗 Foldering Convention Notion Link 🔗](https://www.notion.so/8ac46c75c4a1462b84c890fd6f9a7ffb)
-
 ---
 
