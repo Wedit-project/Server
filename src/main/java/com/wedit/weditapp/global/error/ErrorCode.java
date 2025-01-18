@@ -28,6 +28,7 @@ public enum ErrorCode {
 	EXPIRED_JWT_TOKEN(401, "EXPIRED_JWT_TOKEN", "만료된 JWT 토큰입니다."),
 	UNSUPPORTED_JWT_TOKEN(401, "UNSUPPORTED_JWT_TOKEN", "지원되지 않는 JWT 토큰입니다."),
 	ILLEGAL_JWT(400, "ILLEGAL_JWT", "JWT 토큰 핸들러 컴팩트 오류입니다."),
+	EMAIL_NOT_PROVIDED(400, "EMAIL_NOT_PROVIDED", "이메일이 제공되지 않았습니다."),
 
 	//작업
 	DELETE_FORBIDDEN(403, "DELETE_FORBIDDEN", "삭제 권한이 없습니다.");
