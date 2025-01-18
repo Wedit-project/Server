@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @NoArgsConstructor
@@ -46,4 +49,6 @@ public class InvitationCreateRequestDTO {
 
     // BankAccountDTO 생성 후 활성화
     //private List<BankAccountDTO> bankAccounts; // 계좌 정보 리스트
+
+    private List<MultipartFile> images; // 이미지 파일 리스트 (4장)
 }
