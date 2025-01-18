@@ -4,6 +4,7 @@ import com.wedit.weditapp.domain.member.domain.Member;
 import com.wedit.weditapp.domain.member.dto.LoginRequestDto;
 import com.wedit.weditapp.domain.member.dto.MemberRequestDto;
 import com.wedit.weditapp.domain.member.dto.MemberResponseDto;
+import com.wedit.weditapp.domain.member.dto.TokenResponseDto;
 import com.wedit.weditapp.domain.member.service.MemberService;
 import com.wedit.weditapp.global.response.GlobalResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,13 +48,13 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "서버 에러")
     })
     @PostMapping("/login")
-    public ResponseEntity<GlobalResponseDto<String>> login(
+    public ResponseEntity<GlobalResponseDto<TokenResponseDto>> login(
         @RequestBody LoginRequestDto loginRequest) {
-        // 로그인 로직 → 토큰 발급
-        String token = memberService.login(loginRequest);
+        // login() 호출 -> TokenResponseDto 리턴
+        TokenResponseDto tokenResponse = memberService.login(loginRequest);
 
-        // 토큰을 응답 바디로 전달
-        return ResponseEntity.ok(GlobalResponseDto.success(token));
+        // 프론트엔드나 클라이언트가 AccessToken, RefreshToken 모두 받을 수 있게 DTO로 반환
+        return ResponseEntity.ok(GlobalResponseDto.success(tokenResponse));
     }
 
     // 모든 회원 조회 API
