@@ -1,4 +1,4 @@
-package com.wedit.weditapp.global.oauth2.domain;
+package com.wedit.weditapp.global.auth.login.domain;
 
 import com.wedit.weditapp.domain.shared.MemberRole;
 import com.wedit.weditapp.domain.shared.MemberStatus;

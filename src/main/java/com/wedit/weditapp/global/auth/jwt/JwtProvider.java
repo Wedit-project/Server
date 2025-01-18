@@ -1,4 +1,4 @@
-package com.wedit.weditapp.global.security.jwt;
+package com.wedit.weditapp.global.auth.jwt;
 
 import com.nimbusds.oauth2.sdk.token.AccessToken;
 import com.wedit.weditapp.global.error.ErrorCode;

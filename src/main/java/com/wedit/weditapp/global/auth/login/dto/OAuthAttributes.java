@@ -1,7 +1,7 @@
-package com.wedit.weditapp.global.oauth2.dto;
+package com.wedit.weditapp.global.auth.login.dto;
 
-import com.wedit.weditapp.global.oauth2.userInfo.KakaoOAuth2UserInfo;
-import com.wedit.weditapp.global.oauth2.userInfo.OAuth2UserInfo;
+import com.wedit.weditapp.global.auth.login.userInfo.KakaoOAuth2UserInfo;
+import com.wedit.weditapp.global.auth.login.userInfo.OAuth2UserInfo;
 import lombok.Builder;
 import lombok.Getter;
 

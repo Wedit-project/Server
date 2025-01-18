@@ -8,7 +8,7 @@ import com.wedit.weditapp.domain.member.dto.MemberResponseDto;
 import com.wedit.weditapp.domain.member.dto.TokenResponseDto;
 import com.wedit.weditapp.global.error.ErrorCode;
 import com.wedit.weditapp.global.error.exception.CommonException;
-import com.wedit.weditapp.global.security.jwt.JwtProvider;
+import com.wedit.weditapp.global.auth.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

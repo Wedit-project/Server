@@ -1,10 +1,9 @@
-package com.wedit.weditapp.global.oauth2.handler;
+package com.wedit.weditapp.global.auth.login.handler;
 
 import com.wedit.weditapp.domain.member.domain.Member;
 import com.wedit.weditapp.domain.member.domain.repository.MemberRepository;
-import com.wedit.weditapp.domain.shared.MemberRole;
-import com.wedit.weditapp.global.oauth2.domain.CustomOAuth2User;
-import com.wedit.weditapp.global.security.jwt.JwtProvider;
+import com.wedit.weditapp.global.auth.login.domain.CustomOAuth2User;
+import com.wedit.weditapp.global.auth.jwt.JwtProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

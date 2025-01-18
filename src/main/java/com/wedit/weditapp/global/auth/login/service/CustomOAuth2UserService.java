@@ -1,12 +1,12 @@
-package com.wedit.weditapp.global.oauth2.service;
+package com.wedit.weditapp.global.auth.login.service;
 
 import com.wedit.weditapp.domain.member.domain.Member;
 import com.wedit.weditapp.domain.member.domain.repository.MemberRepository;
 import com.wedit.weditapp.global.error.ErrorCode;
 import com.wedit.weditapp.global.error.exception.CommonException;
-import com.wedit.weditapp.global.oauth2.domain.CustomOAuth2User;
-import com.wedit.weditapp.global.oauth2.dto.OAuthAttributes;
-import com.wedit.weditapp.global.oauth2.userInfo.KakaoOAuth2UserInfo;
+import com.wedit.weditapp.global.auth.login.domain.CustomOAuth2User;
+import com.wedit.weditapp.global.auth.login.dto.OAuthAttributes;
+import com.wedit.weditapp.global.auth.login.userInfo.KakaoOAuth2UserInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

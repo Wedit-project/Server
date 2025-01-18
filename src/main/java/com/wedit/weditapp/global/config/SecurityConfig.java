@@ -4,8 +4,7 @@ import static org.springframework.security.config.Customizer.*;
 
 import java.util.Arrays;
 
-import com.wedit.weditapp.global.security.jwt.JwtAuthenticationFilter;
-import com.wedit.weditapp.global.security.jwt.JwtProvider;
+import com.wedit.weditapp.global.auth.jwt.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

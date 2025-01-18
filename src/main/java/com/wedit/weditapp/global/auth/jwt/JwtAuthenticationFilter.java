@@ -1,4 +1,4 @@
-package com.wedit.weditapp.global.security.jwt;
+package com.wedit.weditapp.global.auth.jwt;
 
 import com.wedit.weditapp.domain.member.domain.Member;
 import com.wedit.weditapp.domain.member.domain.repository.MemberRepository;

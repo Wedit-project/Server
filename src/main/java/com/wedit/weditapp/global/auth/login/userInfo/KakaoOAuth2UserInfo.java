@@ -1,4 +1,4 @@
-package com.wedit.weditapp.global.oauth2.userInfo;
+package com.wedit.weditapp.global.auth.login.userInfo;
 
 import java.util.Map;
 
