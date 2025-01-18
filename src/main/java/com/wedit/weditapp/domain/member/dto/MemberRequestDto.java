@@ -16,10 +16,4 @@ public class MemberRequestDto {
 
     @NotBlank(message = "이름을 반드시 입력해야 합니다.")
     private String name;
-
-    @Builder
-    public MemberRequestDto(String email, String name) {
-        this.email = email;
-        this.name = name;
-    }
 }

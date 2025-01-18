@@ -3,6 +3,8 @@ package com.wedit.weditapp.domain.member.domain;
 import com.wedit.weditapp.domain.shared.BaseTimeEntity;
 import com.wedit.weditapp.domain.shared.MemberRole;
 import com.wedit.weditapp.domain.shared.MemberStatus;
+import com.wedit.weditapp.global.error.ErrorCode;
+import com.wedit.weditapp.global.error.exception.CommonException;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -53,15 +55,15 @@ public class Member extends BaseTimeEntity {
     // 사용자 이메일 변경 Method
     public void updateEmail(String newEmail) {
         if (newEmail == null || newEmail.trim().isEmpty()) {
-            throw new IllegalArgumentException("공백이면 안됩니다.");
+            throw new CommonException(ErrorCode.EMPTY_FIELD);
         }
-        this.name = newEmail;
+        this.email = newEmail;
     }
 
     // 사용자 이름 변경 Method
     public void updateName(String newName) {
         if (newName == null || newName.trim().isEmpty()) {
-            throw new IllegalArgumentException("공백이면 안됩니다.");
+            throw new CommonException(ErrorCode.EMPTY_FIELD);
         }
         this.name = newName;
     }
@@ -74,7 +76,7 @@ public class Member extends BaseTimeEntity {
     // 사용자 역할 변경 Method
     public void updateRole(MemberRole newRole) {
         if (newRole == null) {
-            throw new IllegalArgumentException("공백이면 안됩니다.");
+            throw new CommonException(ErrorCode.EMPTY_FIELD);
         }
         this.role = newRole;
     }

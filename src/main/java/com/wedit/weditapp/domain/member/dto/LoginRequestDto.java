@@ -9,8 +9,4 @@ import lombok.NoArgsConstructor;
 public class LoginRequestDto {
     private String email;
 
-    @Builder
-    public LoginRequestDto(String email) {
-        this.email = email;
-    }
 }
