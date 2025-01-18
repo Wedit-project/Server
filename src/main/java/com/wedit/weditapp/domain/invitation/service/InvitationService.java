@@ -1,17 +1,15 @@
 package com.wedit.weditapp.domain.invitation.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.wedit.weditapp.domain.image.domain.Image;
-import com.wedit.weditapp.domain.image.domain.repository.ImageRepository;
+import com.wedit.weditapp.domain.image.service.ImageService;
 import com.wedit.weditapp.domain.invitation.domain.Invitation;
 import com.wedit.weditapp.domain.invitation.domain.repository.InvitationRepository;
 import com.wedit.weditapp.domain.invitation.dto.request.InvitationCreateRequestDTO;
-import com.wedit.weditapp.domain.shared.S3Service;
+import com.wedit.weditapp.domain.member.domain.Member;
 import com.wedit.weditapp.domain.shared.Theme;
 
 import jakarta.transaction.Transactional;
@@ -21,52 +19,41 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class InvitationService {
 	private final InvitationRepository invitationRepository;
-	private final ImageRepository imageRepository;
-	private final S3Service s3Service;
+	private final ImageService imageService;
 
+	/**
+	 * Invitation 저장 및 이미지 처리
+	 *
+	 * @param member  요청한 사용자 정보
+	 * @param request Invitation 생성 요청 DTO
+	 * @param images  업로드할 이미지 리스트
+	 * @return 저장된 Invitation
+	 */
 	@Transactional
-	public Long createInvitation(InvitationCreateRequestDTO dto) {
-		// 1. DTO 데이터 검증
-		if (dto.getImages() == null || dto.getImages().size() != 4) {
-			throw new IllegalArgumentException("4장의 이미지를 업로드해야 합니다.");
-		}
-
-		// 2. 초대장 저장
+	public Invitation saveInvitationWithImages(Member member, InvitationCreateRequestDTO request, List<MultipartFile> images) {
+		// Invitation 생성
 		Invitation invitation = Invitation.builder()
-			.groom(dto.getGroom())
-			.bride(dto.getBride())
-			.groomF(dto.getGroomF())
-			.groomM(dto.getGroomM())
-			.brideF(dto.getBrideF())
-			.brideM(dto.getBrideM())
-			.address(dto.getAddress())
-			.extraAddress(dto.getExtraAddress())
-			.date(dto.getDate())
-			.theme(Theme.valueOf(dto.getTheme().toUpperCase())) // Enum 변환
-			.distribution(dto.getDistribution())
-			.guestBookOption(dto.isGuestBookOption())
-			.decisionOption(dto.isDecisionOption())
-			.accountOption(dto.isAccountOption())
+			.member(member)
+			.groom(request.getGroom())
+			.bride(request.getBride())
+			.groomF(request.getGroomF())
+			.groomM(request.getGroomM())
+			.brideF(request.getBrideF())
+			.brideM(request.getBrideM())
+			.address(request.getAddress())
+			.extraAddress(request.getExtraAddress())
+			.date(request.getDate())
+			.theme(Theme.valueOf(request.getTheme()))
+			.guestBookOption(request.isGuestBookOption())
+			.decisionOption(request.isDecisionOption())
+			.accountOption(request.isAccountOption())
 			.build();
-		invitationRepository.save(invitation);
 
-		// 3. 이미지 파일 S3 업로드 및 저장
-		List<Image> images = new ArrayList<>();
-		for (int i = 0; i < dto.getImages().size(); i++) {
-			MultipartFile file = dto.getImages().get(i);
-			String imageUrl = s3Service.upload(file); // S3 업로드 후 URL 반환
+		invitation = invitationRepository.save(invitation);
 
-			Image image = Image.builder()
-				.url(imageUrl)
-				.location(i + 1) // 1, 2, 3, 4로 location 부여
-				.invitation(invitation)
-				.build();
-			images.add(image);
-		}
-		imageRepository.saveAll(images);
+		// 이미지 저장
+		imageService.saveImages(images, invitation);
 
-		// 초대장 ID 반환
-		return invitation.getId();
+		return invitation;
 	}
 }
-
