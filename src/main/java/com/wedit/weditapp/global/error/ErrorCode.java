@@ -14,11 +14,13 @@ public enum ErrorCode {
 	INVALID_FILE_FORMAT(400, "INVALID_FILE_FORMAT", "올바르지 않은 파일 형식입니다."),
 	INVALID_TOKEN(401, "INVALID_TOKEN",  "유효하지 않은 토큰입니다."),
 	REJECT_DUPLICATION(409, "REJECT_DUPLICATION", "중복된 값입니다."),
+	EMPTY_FIELD(400, "EMPTY_FIELD", "공백이면 안됩니다."),
 
 	//회원
 	LOGIN_FAIL(401, "LOGIN_FAIL", "로그인에 실패하였습니다."),
 	USER_NOT_FOUND(404, "USER_NOT_FOUND", "유저를 찾을 수 없습니다."),
-	MEMBER_ALREADY_EXISTS(409, "MEMBER_ALREADY_EXISTS", "이미 가입된 이메일입니다."),
+	MEMBER_ALREADY_EXISTS(409, "MEMBER_ALREADY_EXISTS", "이미 존재하는 회원입니다."),
+	EMAIL_ALREADY_EXISTS(409, "EMAIL_ALREADY_EXISTS", "이미 가입된 이메일입니다."),
 	DUPLICATE_NICKNAME(409, "NICKNAME_ALREADY_EXISTS", "이미 존재하는 닉네임입니다."),
 
 	//작업

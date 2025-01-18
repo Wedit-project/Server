@@ -3,6 +3,8 @@ package com.wedit.weditapp.domain.member.domain;
 import com.wedit.weditapp.domain.shared.BaseTimeEntity;
 import com.wedit.weditapp.domain.shared.MemberRole;
 import com.wedit.weditapp.domain.shared.MemberStatus;
+import com.wedit.weditapp.global.error.ErrorCode;
+import com.wedit.weditapp.global.error.exception.CommonException;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -23,17 +25,11 @@ public class Member extends BaseTimeEntity {
     private String email;
 
     @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false)
     private String name;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private MemberRole role;
-
-    @Column(nullable = false, unique = true)
-    private String refresh_token;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
@@ -41,26 +37,47 @@ public class Member extends BaseTimeEntity {
 
     // Builder를 통해서만 객체를 생성하도록 (일반 생성자는 protected)
     @Builder
-    private Member(String kakaoId, String email, String name, MemberRole role, String password, MemberStatus status) {
+    private Member(String email, String name) {
         this.email = email;
         this.name = name;
-        this.role = role != null ? role : MemberRole.USER;     // 유저 역할 기본값 USER
-        this.password = password;
-        this.status = status != null ? status : MemberStatus.ACTIVE; // 유저 상태 기본값 ACTIVE
+        this.role = MemberRole.USER;
+        this.status = MemberStatus.ACTIVE;
     }
 
-    public static Member createUser(String email, String name, String password) {
+    // 사용자 생성 Method
+    public static Member createUser(String email, String name) {
         return Member.builder()
                 .email(email)
                 .name(name)
-                .password(password)
-                .role(MemberRole.USER) // 기본값 USER
-                .status(MemberStatus.ACTIVE) // 기본값 ACTIVE
                 .build();
     }
 
-    // 상태 변경 예시 메서드
+    // 사용자 이메일 변경 Method
+    public void updateEmail(String newEmail) {
+        if (newEmail == null || newEmail.trim().isEmpty()) {
+            throw new CommonException(ErrorCode.EMPTY_FIELD);
+        }
+        this.email = newEmail;
+    }
+
+    // 사용자 이름 변경 Method
+    public void updateName(String newName) {
+        if (newName == null || newName.trim().isEmpty()) {
+            throw new CommonException(ErrorCode.EMPTY_FIELD);
+        }
+        this.name = newName;
+    }
+
+    // 사용자 상태 변경 Method
     public void deactivate() {
         this.status = MemberStatus.INACTIVE;
+    }
+
+    // 사용자 역할 변경 Method
+    public void updateRole(MemberRole newRole) {
+        if (newRole == null) {
+            throw new CommonException(ErrorCode.EMPTY_FIELD);
+        }
+        this.role = newRole;
     }
 }
