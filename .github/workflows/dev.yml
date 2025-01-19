@@ -88,7 +88,7 @@ jobs:
           cd ./src/main/resources
           touch ./application-jwt.yml
           echo "${{ secrets.YML_JWT }}" > ./application-jwt.yml
-          shell: bash
+        shell: bash
 
       # Gradle Build (test는 제외)
       - name: Build with Gradle
