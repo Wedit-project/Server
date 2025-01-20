@@ -29,15 +29,17 @@ public class Comments extends BaseTimeEntity {
     private Invitation invitation;
 
     @Builder
-    private Comments(String name, String content){
+    private Comments(String name, String content, Invitation invitation){
         this.name = name;
         this.content = content;
+        this.invitation = invitation;
     }
 
-    public static Comments createComment(String name, String content){
+    public static Comments createComment(String name, String content, Invitation invitation){
         return Comments.builder()
                 .name(name)
                 .content(content)
+                .invitation(invitation)
                 .build();
     }
 
