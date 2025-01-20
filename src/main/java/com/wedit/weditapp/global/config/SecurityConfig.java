@@ -6,9 +6,11 @@ import com.wedit.weditapp.global.auth.login.service.CustomOAuth2UserService;
 import com.wedit.weditapp.global.auth.jwt.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -37,10 +39,14 @@ public class SecurityConfig {
 				.formLogin(AbstractHttpConfigurer::disable)
 				.httpBasic(AbstractHttpConfigurer::disable)
 				.csrf(AbstractHttpConfigurer::disable)
+				.cors(Customizer.withDefaults())
 
 				// 2. 세션 관련 정책 추가 : 세션 방식 사용 X (오직 JWT만 사용)
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
+				.headers(headers ->
+						headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
+				)
 				// 3. 권한 설정
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/v3/api-docs/**",
@@ -59,10 +65,10 @@ public class SecurityConfig {
 						)
 						.successHandler(oAuth2LoginSuccessHandler)
 						.failureHandler(oAuth2LoginFailureHandler)
-				);
+				)
+				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
 		// 5. JWT 인증 필터 등록
-		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
 	}

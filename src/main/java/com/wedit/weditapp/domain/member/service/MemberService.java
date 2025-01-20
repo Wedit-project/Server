@@ -50,10 +50,7 @@ public class MemberService {
         member.updateRefreshToken(refreshToken);
         memberRepository.save(member);
 
-        return TokenResponseDto.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build();
+        return TokenResponseDto.from(accessToken, refreshToken);
     }
 
     // [모든 회원 조회]

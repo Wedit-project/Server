@@ -33,23 +33,25 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         // DB에서 사용자 조회
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
 
-        if (optionalMember.isEmpty()) {
-            // 새로운 사용자인 경우 추가 정보 입력 페이지로 리다이렉트
-            handleNewUser(response, oAuth2User);
-        } else {
-            // 기존 사용자 로그인 성공
-            handleExistingUser(response, optionalMember.get());
-        }
+        handleExistingUser(response, optionalMember.get());
+
+//        if (optionalMember.isEmpty()) {
+//            // 새로운 사용자인 경우 추가 정보 입력 페이지로 리다이렉트
+//            handleNewUser(response, oAuth2User);
+//        } else {
+//            // 기존 사용자 로그인 성공
+//            handleExistingUser(response, optionalMember.get());
+//        }
     }
 
-    // 새로운 사용자 처리 - 추가 정보 입력 페이지로 리다이렉트
-    private void handleNewUser(HttpServletResponse response, CustomOAuth2User oAuth2User) throws IOException {
-        String accessToken = jwtProvider.createAccessToken(oAuth2User.getEmail());
-        response.addHeader(jwtProvider.getAccessHeader(), "Bearer " + accessToken);
-
-        log.info("새로운 사용자: 추가 정보 입력 페이지로 리다이렉트");
-        response.sendRedirect("/oauth2/sign-up"); // 프론트의 회원가입 추가 정보 입력 폼으로 리다이렉트
-    }
+//    // 새로운 사용자 처리 - 추가 정보 입력 페이지로 리다이렉트
+//    private void handleNewUser(HttpServletResponse response, CustomOAuth2User oAuth2User) throws IOException {
+//        String accessToken = jwtProvider.createAccessToken(oAuth2User.getEmail());
+//        response.addHeader(jwtProvider.getAccessHeader(), "Bearer " + accessToken);
+//
+//        log.info("새로운 사용자: 추가 정보 입력 페이지로 리다이렉트");
+//        response.sendRedirect("/oauth2/sign-up"); // 프론트의 회원가입 추가 정보 입력 폼으로 리다이렉트
+//    }
 
     // 기존 사용자 처리 - 토큰 발급 및 로그인 성공 처리
     private void handleExistingUser(HttpServletResponse response, Member member) throws IOException {
