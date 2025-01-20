@@ -1,5 +1,6 @@
 package com.wedit.weditapp.domain.invitation.dto.response;
 
+import com.wedit.weditapp.domain.bankAccounts.dto.BankAccountDTO;
 import com.wedit.weditapp.domain.invitation.domain.Invitation;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -44,13 +46,14 @@ public class InvitationResponseDTO {
 
     private boolean accountOption; // 계좌 공개 옵션
 
+    private List<BankAccountDTO> bankAccounts; // 계좌 정보 리스트
+
     // DTO 생성 후 활성화
-    //private List<BankAccountDTO> bankAccounts; // 계좌 정보 리스트
     //private List<GuestbookResponseDTO> guestbooks; // 방명록 리스트
 
     @Builder
-    private InvitationResponseDTO(String groom, String bride, String groomF, String groomM, String brideF, String brideM, String address, String extraAddress, LocalDate date, String theme, String distribution, boolean guestBookOption, boolean decisionOption, boolean accountOption
-            //, List<BankAccountDTO> bankAccounts, List<GuestbookResponseDTO> guestbooks
+    private InvitationResponseDTO(String groom, String bride, String groomF, String groomM, String brideF, String brideM, String address, String extraAddress, LocalDate date, String theme, String distribution, boolean guestBookOption, boolean decisionOption, boolean accountOption, List<BankAccountDTO> bankAccounts
+            //, List<GuestbookResponseDTO> guestbooks
     ) {
         this.groom = groom;
         this.bride = bride;
@@ -66,12 +69,12 @@ public class InvitationResponseDTO {
         this.guestBookOption = guestBookOption;
         this.decisionOption = decisionOption;
         this.accountOption = accountOption;
-        //this.bankAccounts = bankAccounts;
+        this.bankAccounts = bankAccounts;
         //this.guestbooks = guestbooks;
     }
 
-    public static InvitationResponseDTO from(Invitation invitation
-            //, List<BankAccountDTO> bankAccounts, List<GuestbookResponseDTO> guestbooks
+    public static InvitationResponseDTO from(Invitation invitation, List<BankAccountDTO> bankAccounts
+            //, List<GuestbookResponseDTO> guestbooks
     ) {
         return InvitationResponseDTO.builder()
                 .groom(invitation.getGroom())
@@ -88,7 +91,7 @@ public class InvitationResponseDTO {
                 .guestBookOption(invitation.isGuestBookOption())
                 .decisionOption(invitation.isDecisionOption())
                 .accountOption(invitation.isAccountOption())
-                //.bankAccounts(bankAccounts)
+                .bankAccounts(bankAccounts)
                 //.guestbooks(guestbooks)
                 .build();
     }

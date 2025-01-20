@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import com.wedit.weditapp.domain.bankAccounts.dto.BankAccountDTO;
 
 @Getter
 @NoArgsConstructor
@@ -41,6 +44,5 @@ public class InvitationCreateRequestDTO {
 
     private boolean accountOption; // 계좌 공개 옵션
 
-    // BankAccountDTO 생성 후 활성화
-    //private List<BankAccountDTO> bankAccounts; // 계좌 정보 리스트
+    private List<BankAccountDTO> bankAccounts; // 계좌 정보 리스트
 }
