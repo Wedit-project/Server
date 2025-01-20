@@ -29,7 +29,7 @@ public class BankAccountService {
 				dto.getAccountHolder(),
 				invitation
 			)).collect(Collectors.toList());
-		
+
 		return bankAccountRepository.saveAll(bankAccounts);
 	}
 }
