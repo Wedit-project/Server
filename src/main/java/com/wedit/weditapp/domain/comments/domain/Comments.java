@@ -1,5 +1,6 @@
 package com.wedit.weditapp.domain.comments.domain;
 
+import com.wedit.weditapp.domain.invitation.domain.Invitation;
 import com.wedit.weditapp.domain.shared.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -23,9 +24,9 @@ public class Comments extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "invitation_id", nullable = false)
-//    private Invitations invitations;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "invitation_id", nullable = false)
+    private Invitation invitation;
 
     @Builder
     private Comments(String name, String content){
