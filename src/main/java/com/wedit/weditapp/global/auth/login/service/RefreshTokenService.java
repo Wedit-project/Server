@@ -26,7 +26,7 @@ public class RefreshTokenService {
     }
 
     // refreshToken 삭제 (추후 로그아웃 구현 시)
-//    public void deleteRefreshToken(String refreshToken) {
-//        redisTemplate.delete(refreshToken);
-//    }
+    public void deleteRefreshToken(String refreshToken) {
+        redisTemplate.delete(refreshToken);
+    }
 }
