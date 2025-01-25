@@ -54,37 +54,44 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     // RefreshToken을 사용하여 AccessToken 재발급 (Redis 추가)
-    private void reIssueAccessToken(HttpServletResponse response, String refreshToken) {
-        // 1. Redis에서 RefreshToken → email 조회
-        String email = refreshTokenService.getEmailByRefreshToken(refreshToken);
-        if (email == null) {
-            log.error("유효하지 않은 RefreshToken으로 재발급 시도. refreshToken = {}", refreshToken);
+    private void reIssueAccessToken(HttpServletResponse response, String refreshToken) throws IOException {
+        // 1. RefreshToken에서 이메일 추출
+        Optional<String> emailOpt = jwtProvider.extractEmailFromRefreshToken(refreshToken);
+        if (emailOpt.isEmpty()) {
+            log.error("RefreshToken에서 이메일 추출 실패: {}", refreshToken);
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Refresh Token");
+            return;
+        }
+        String email = emailOpt.get();
+
+        // 2. Redis에서 저장된 RefreshToken 조회
+        String storedRefreshToken = refreshTokenService.getRefreshToken(email);
+        if (storedRefreshToken == null || !storedRefreshToken.equals(refreshToken)) {
+            log.error("Redis에 저장된 RefreshToken과 일치하지 않음. email = {}", email);
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Refresh Token");
             return;
         }
 
-        // 2. DB에서 사용자 조회
+        // 3. DB에서 사용자 조회
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
         if (optionalMember.isEmpty()) {
             log.error("RefreshToken의 이메일로 회원을 찾을 수 없음. email = {}", email);
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Refresh Token");
             return;
         }
 
         Member member = optionalMember.get();
 
-        // 3. 새로운 토큰 생성
+        // 4. 새로운 토큰 생성
         String newAccessToken = jwtProvider.createAccessToken(member.getEmail());
-        String newRefreshToken = jwtProvider.createRefreshToken();
+        String newRefreshToken = jwtProvider.createRefreshToken(member.getEmail());
 
-        // 4. Redis 갱신
-        // 기존 Refresh Token 삭제
-        refreshTokenService.deleteRefreshToken(refreshToken);
-        // 새 Refresh Token 등록
-        refreshTokenService.saveRefreshToken(newRefreshToken, member.getEmail());
-
-        // 5. 헤더로 전달
-        jwtProvider.sendAccessAndRefreshToken(response, newAccessToken, newRefreshToken);
-
+        // 5. Redis 갱신 (기존 Refresh Token 삭제 및 새로운 Refresh Token 저장)
+        refreshTokenService.saveRefreshToken(email, newRefreshToken);
         log.info("AccessToken 및 RefreshToken 재발급 완료 for email: {}", email);
+
+        // 6. 클라이언트로 토큰 전달
+        jwtProvider.sendAccessAndRefreshToken(response, newAccessToken, newRefreshToken);
     }
 
     // AccessToken을 사용하여 사용자 인증

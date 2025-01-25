@@ -7,6 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -61,15 +62,16 @@ public class JwtProvider {
                 .compact();
     }
 
-    // Refresh Token 생성
-    public String createRefreshToken() {
+    // Refresh Token 생성 (이메일 클레임 포함)
+    public String createRefreshToken(String email) {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + refreshTokenExpiry);
 
         return Jwts.builder()
-                .subject("RefreshToken")
-                .issuedAt(now)
-                .expiration(expiry)
+                .setSubject("RefreshToken")
+                .claim(EMAIL_CLAIM, email)
+                .setIssuedAt(now)
+                .setExpiration(expiry)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -126,6 +128,22 @@ public class JwtProvider {
             return Optional.ofNullable(claims.get(EMAIL_CLAIM, String.class));
         } catch (JwtException e) {
             log.error("유효하지 않은 AccessToken입니다. {}", e.getMessage());
+            return Optional.empty();
+        }
+    }
+
+    // RefreshToken에서 이메일 클레임 추출
+    public Optional<String> extractEmailFromRefreshToken(String refreshToken) {
+        try {
+            Claims claims = Jwts.parser()
+                    .verifyWith((SecretKey) key)
+                    .build()
+                    .parseSignedClaims(refreshToken)
+                    .getPayload();
+
+            return Optional.ofNullable(claims.get(EMAIL_CLAIM, String.class));
+        } catch (JwtException e) {
+            log.error("유효하지 않은 RefreshToken입니다. {}", e.getMessage());
             return Optional.empty();
         }
     }
