@@ -3,6 +3,7 @@ package com.wedit.weditapp.global.auth.jwt;
 import com.wedit.weditapp.domain.member.domain.Member;
 import com.wedit.weditapp.domain.member.domain.repository.MemberRepository;
 import com.wedit.weditapp.global.auth.login.service.RefreshTokenService;
+import com.wedit.weditapp.global.auth.login.service.TokenManager;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtProvider jwtProvider;
     private final MemberRepository memberRepository;
     private final RefreshTokenService refreshTokenService;
+    private final TokenManager tokenManager;
 
     private final GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
 
@@ -82,16 +84,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         Member member = optionalMember.get();
 
-        // 4. 새로운 토큰 생성
-        String newAccessToken = jwtProvider.createAccessToken(member.getEmail());
-        String newRefreshToken = jwtProvider.createRefreshToken(member.getEmail());
-
-        // 5. Redis 갱신 (기존 Refresh Token 삭제 및 새로운 Refresh Token 저장)
-        refreshTokenService.saveRefreshToken(email, newRefreshToken);
+        // 4. TokenManager 호출 (새로운 Access/Refresh Token 발급 & Redis 저장 & 응답 전송)
+        tokenManager.issueNewTokens(response, email, true);
         log.info("AccessToken 및 RefreshToken 재발급 완료 for email: {}", email);
-
-        // 6. 클라이언트로 토큰 전달
-        jwtProvider.sendAccessAndRefreshToken(response, newAccessToken, newRefreshToken);
     }
 
     // AccessToken을 사용하여 사용자 인증
@@ -110,13 +105,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     //UserDetails 설정
     private void setAuthentication(Member member) {
         UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
-            .username(member.getEmail())
-            .password("") // 비밀번호는 사용하지 않으므로 빈 문자열
-            .roles(member.getRole().name())
-            .build();
+                .username(member.getEmail())
+                .password("") // 비밀번호는 사용하지 않으므로 빈 문자열
+                .roles(member.getRole().name())
+                .build();
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(
-            userDetails, null, authoritiesMapper.mapAuthorities(userDetails.getAuthorities())
+                userDetails, null, authoritiesMapper.mapAuthorities(userDetails.getAuthorities())
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);

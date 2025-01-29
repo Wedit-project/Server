@@ -76,30 +76,11 @@ public class JwtProvider {
                 .compact();
     }
 
-    // Access Token + Refresh Token 헤더에 설정
-    public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
+    // Access Token 헤더에 설정
+    public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken) {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setHeader(accessHeader, BEARER + accessToken);
-        response.setHeader(refreshHeader, BEARER + refreshToken);
-        log.info("AccessToken, RefreshToken 헤더 설정 완료");
-    }
-
-    // Access Token 헤더에 설정
-    public void setAccessTokenHeader(HttpServletResponse response, String accessToken) {
-        response.setHeader(accessHeader, BEARER + accessToken);
-    }
-
-    // Refresh Token 헤더에 설정
-    public void setRefreshTokenHeader(HttpServletResponse response, String refreshToken) {
-        response.setHeader(refreshHeader, BEARER + refreshToken);
-    }
-
-    public String getAccessHeader() {
-        return "Authorization";
-    }
-
-    public String getRefreshHeader() {
-        return "Authorization-Refresh";
+        log.info("Access Token 헤더 설정 완료");
     }
 
     // 헤더에서 AccessToken 추출
