@@ -85,7 +85,7 @@ public class SecurityConfig {
 		//configuration.setAllowedOrigins(Arrays.asList(allowedOrigins));
 		configuration.setAllowedOrigins(Arrays.asList(
 				"http://localhost:3000", "http://localhost:5173", "http://localhost:8080",
-				"http://wedit.site", "https://wedit.site", "http://43.201.85.194:5173"));
+				 "https://wedit.site", "http://43.201.85.194:5173"));
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
 		configuration.setAllowedHeaders(Arrays.asList("*"));
 		configuration.setExposedHeaders(Arrays.asList("Content-Type", "Authorization", "Authorization-refresh", "accept"));
