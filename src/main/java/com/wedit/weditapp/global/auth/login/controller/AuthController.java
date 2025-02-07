@@ -97,8 +97,13 @@ public class AuthController {
 
     private void expireCookie(HttpServletResponse response, String cookieName) {
         Cookie cookie = new Cookie(cookieName, null);
+        cookie.setDomain("43.201.85.194.nip.io");
         cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setAttribute("SameSite", "None");
         cookie.setMaxAge(0);
+
         response.addCookie(cookie);
     }
 }
