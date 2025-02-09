@@ -87,8 +87,6 @@ public class SecurityConfig {
 			"http://localhost:3000",
 			"http://localhost:5173",
 			"http://localhost:8080",
-			"https://wedit.site",
-			"https://wedit.site/oauth/callback/kakao"
 			));*/
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
 		configuration.setAllowedHeaders(Arrays.asList("*"));
