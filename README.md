@@ -81,13 +81,13 @@
   <tr>
     <td align="center"><img src="https://github.com/dyk-im.png" width="160"></td>
     <td align="center"><img src="https://github.com/dogsub.png" width="160"></td>
-    <td align="center"><img src="https://github.com/leeseulgi0208.png" width="160"></td>
+    <td align="center"><img src="https://github.com/wiz0208.png" width="160"></td>
     <td align="center"><img src="https://github.com/KyunghwanChoi.png" width="160"></td>
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/dyk-im">김동윤</td>
     <td align="center"><a href="https://github.com/dogsub">김동섭</td>
-    <td align="center"><a href="https://github.com/leeseulgi0208">이슬기</td>
+    <td align="center"><a href="https://github.com/wiz0208">이슬기</td>
     <td align="center"><a href="https://github.com/KyunghwanChoi">최경환</td>
   </tr>
   <tr>
