@@ -177,7 +177,8 @@
 
 ## ⚙️ 아키텍처 구조
 
-![시스템아키텍처 v1 0](https://github.com/user-attachments/assets/67a91724-ee68-4c09-80f7-d3a3af3fe1a5)
+![시스템아키텍처 v1 0](https://github.com/user-attachments/assets/2d8a898c-b8e4-4c82-a4d4-946d9fd16d3d)
+
 
 
 ## 🛠️ 기술 스택
